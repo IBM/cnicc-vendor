@@ -1,0 +1,20 @@
+name: "assembly::{{name}}::1.0"
+description: "A sample assembly"
+properties:
+  deploymentLocation:
+    type: string
+    description: openstack tenant
+    default: "world"
+  resourceManager:
+    type: string
+    description: resource manager
+    default: ansible
+composition:
+  hw:
+    type: resource::{{name}}::1.0
+    quantity: 1
+    properties:
+      resourceManager:
+        value: ${resourceManager}
+      deploymentLocation:
+        value: ${deploymentLocation}
