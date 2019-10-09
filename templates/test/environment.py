@@ -8,9 +8,8 @@ def before_all(context):
     print(os.getcwd()) 
     subprocess.call(['docker-compose', '-f', 'fixtures/docker-compose.yml',
                      'up', '-d', '--build'])
-
-    subprocess.call(['docker','cp','resources', 'ansible-rm:/var/alm_ansible_rm/'])
     time.sleep(10)
+    subprocess.call(['docker','cp','resources/', 'ansible-rm:/var/alm_ansible_rm/'])
 
 def after_all(context):
     """ function run after all the scenarios in a feature """

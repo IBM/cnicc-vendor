@@ -49,5 +49,12 @@ def step_impl(context, transition, name, r_type):
 
 @step(u'that transition completes')
 def step_impl(context):
-    results = requests.get("%s/lifecycle/transitions/%s/status" % (ARM_URL, context.resource_id))
+
+    for _ in range(MAX_RETRIES):
+      results = requests.get("%s/lifecycle/transitions/%s/status" % (ARM_URL, context.resource_id))
+      if str(results.json()).find("COMPLETE") > 0:
+          break
+      time.sleep(10)
+
+    assert str(results.json()).find("COMPLETE") > 0
     context.results = results
